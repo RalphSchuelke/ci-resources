@@ -15,7 +15,7 @@ begin
 
 process
 {
-    dotnet tool install gitversion.tool
+    dotnet tool install --tool-manifest ci/.config/dotnet-tools.json  gitversion.tool
     Install-PsResource $ModuleList -Scope CurrentUser
     Update-PsResource $ModuleList -Scope CurrentUser
 
