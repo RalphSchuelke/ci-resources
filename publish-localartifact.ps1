@@ -42,5 +42,5 @@ process
 	}
     }
   # publish-module can infer version folder. publish-psresource it seems cannot.
-  Publish-PsResource -Path $ModuleLocation.FullName -repository appveyorTemp -Verbose -ErrorAction Stop
+  Publish-PsResource -Path $ModuleLocation.FullName -repository $ProjectName -Verbose -ErrorAction Stop
 }
