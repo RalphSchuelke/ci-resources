@@ -1,7 +1,7 @@
 [cmdletbinding()]
 Param
 (
-    [string[]] $ModuleList = 'Pester', 'Microsoft.PowerShell.PSResourceGet', 'ModuleBuilder'
+    [string[]] $ModuleList = @('Pester', 'Microsoft.PowerShell.PSResourceGet', 'ModuleBuilder')
 )
 
 begin
