@@ -7,6 +7,7 @@ Param
 begin
 {
 $errorActionPreference = 'Stop'
+disable-proxy
 }
 process
 {
