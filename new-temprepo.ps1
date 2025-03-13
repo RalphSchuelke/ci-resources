@@ -13,7 +13,7 @@ Might want to reconsider this too, eg by failing the moment something goes wrong
 [cmdletbinding()]
 Param
 (
-    [string]$RepoName = 'appveyorTemp'
+    [string]$RepoName = 'appveyorTemp',
     [string]$RepoRoot = $PWD
 )
 begin
