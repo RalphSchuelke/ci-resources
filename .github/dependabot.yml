@@ -1,0 +1,12 @@
+version: 2
+updates:
+- package-ecosystem: nuget
+  directory: "/"
+  schedule:
+    interval: weekly
+    time: '10:00'
+    timezone: Europe/Berlin
+    day: "friday"
+  open-pull-requests-limit: 10
+  reviewers:
+  - RalphSchuelke
