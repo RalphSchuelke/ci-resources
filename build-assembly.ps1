@@ -6,7 +6,10 @@ Param
     [validateset('Backend','Cmdlet')]
     [string]$ProjectType = 'Backend',
     [parameter()]
-    [directoryinfo]$ProjectRoot = "$PSScriptRoot/.."
+    [directoryinfo]$ProjectRoot = "$PSScriptRoot/..",
+
+    [parameter()]
+    [string]$ProjectName = $Env:APPVEYOR_PROJECT_NAME
 )
 
 begin
@@ -21,11 +24,11 @@ process
     dotnet pack    "$($ProjectRoot.FullName)/Source/$($ProjectType)/"
 
     write-warning 'Collecting and publishing resources'
-    write-warning "(JPMF.$($ProjectRoot.Name).$($ProjectType).*nupkg)"
+    write-warning "(JPMF.$($ProjectName).$($ProjectType).*nupkg)"
 
-    foreach($package in Get-childitem -LiteralPath $ProjectRoot.FullName -recurse -force -filter "JPMF.$($ProjectRoot.Name).$($ProjectType).*nupkg")
+    foreach($package in Get-childitem -LiteralPath $ProjectRoot.FullName -recurse -force -filter "JPMF.$($ProjectName).$($ProjectType).*nupkg")
     {
 	Write-Verbose "Processing package: $($Package.FullName)"
-	publish-psresource -repositorye $projectRoot.Name -Path $package.fullname
+	publish-psresource -repository $projectName -Path $package.fullname
     }
 }
