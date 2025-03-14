@@ -6,7 +6,7 @@ Param
 
 begin
 {
-    . "$PSScriptroot/install-temprepo.ps1" -repoName $Env:APPVEYOR_PROJECT_NAME
+    & "$PSScriptroot/install-temprepo.ps1" -repoName $Env:APPVEYOR_PROJECT_NAME
     $errorActionPreference = 'Stop'
     if($null -eq ( Get-Command dotnet ))
     {
