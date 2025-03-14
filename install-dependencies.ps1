@@ -6,6 +6,7 @@ Param
 
 begin
 {
+    ./install-temprepo -repoName $Env:APPVEYOR_PROJECT_NAME
     $errorActionPreference = 'Stop'
     if($null -eq ( Get-Command dotnet ))
     {
