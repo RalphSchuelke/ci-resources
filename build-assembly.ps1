@@ -29,6 +29,7 @@ process
     foreach($package in Get-childitem -LiteralPath $ProjectRoot.FullName -recurse -force -filter "JPMF.$($ProjectName).$($ProjectType).*nupkg")
     {
 	Write-Verbose "Processing package: $($Package.FullName)"
-	publish-psresource -repository $projectName -Path $package.fullname
+	# note: this presumes repository configuration. Needs fixing.
+	copy-item -destination "$($Projectroot.fullname)/$projectName"  -Path $package.fullname
     }
 }
