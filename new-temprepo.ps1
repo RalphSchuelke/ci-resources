@@ -1,3 +1,4 @@
+
 <#
 .Description
 This is to somewhat cleanly set up a temporary repository for holding build artifacts.
@@ -13,7 +14,8 @@ Might want to reconsider this too, eg by failing the moment something goes wrong
 [cmdletbinding()]
 Param
 (
-    [string]$RepoName = 'appveyorTemp',
+    [parameter(mandatory)]
+    [string]$RepoName,
     [string]$RepoRoot = $PWD
 )
 begin
