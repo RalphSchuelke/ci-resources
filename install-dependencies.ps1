@@ -6,7 +6,10 @@ Param
 
 begin
 {
-    & "$PSScriptroot/new-temprepo.ps1" -repoName $Env:APPVEYOR_PROJECT_NAME
+    # exactly WHY do things fail without this?
+    $null=    new-item -itemtype directory -path $PWD -name appveyorTemp -verbose
+    
+#    & "$PSScriptroot/new-temprepo.ps1" -repoName $Env:APPVEYOR_PROJECT_NAME
     $errorActionPreference = 'Stop'
     if($null -eq ( Get-Command dotnet ))
     {
