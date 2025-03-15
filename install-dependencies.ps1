@@ -19,7 +19,7 @@ begin
 
 process
 {
-    dotnet tool install --tool-manifest ci/.config/dotnet-tools.json  gitversion.tool
+    dotnet tool restore --tool-manifest ci/.config/dotnet-tools.json
     Install-PsResource $ModuleList -Scope CurrentUser
     Update-PsResource $ModuleList -Scope CurrentUser
 
