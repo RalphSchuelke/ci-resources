@@ -19,6 +19,7 @@ begin
 
 process
 {
+    & "$($ProjectRoot.Fullname)/ci/new-semver.ps1" -BranchName "${Env:APPVEYOR_REPO_BRANCH}"
     dotnet restore "$($ProjectRoot.FullName)/Source/$($ProjectType)/"
     dotnet build   "$($ProjectRoot.FullName)/Source/$($ProjectType)/"
     dotnet pack    "$($ProjectRoot.FullName)/Source/$($ProjectType)/"
