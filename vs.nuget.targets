@@ -58,8 +58,8 @@ This file is intended to hold private information, such as private keys for nuge
     <Company>$(CompanyName)</Company>
     <PackageProjectUrl Condition="$(UseProjectUrl)==''">https://github.com/$(GhOwner)/$(GhProject)</PackageProjectUrl>
     <PackageProjectUrl Condition="$(UseProjectUrl)!=''">$(UseProjectUrl)</PackageProjectUrl>
-    <PackageLicenseExpression Condition="$(License)==''">>MIT</PackageLicenseExpression>
-    <PackageLicenseExpression Condition="$(License)!=''">>$(License)</PackageLicenseExpression>
+    <PackageLicenseExpression Condition="$(License)==''">MIT</PackageLicenseExpression>
+    <PackageLicenseExpression Condition="$(License)!=''">$(License)</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>$(PackageProjectUrl)</RepositoryUrl>
     <PackageTags>$(PackageTags) $(MSBuildProjectName) JPMF</PackageTags>
