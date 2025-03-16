@@ -21,9 +21,9 @@ process
 {
     $Env:GitVersion_NoNormalizeEnabled='true'
     #& "$($ProjectRoot.Fullname)/ci/new-semver.ps1" -BranchName "${Env:APPVEYOR_REPO_BRANCH}"
-    dotnet restore "$($ProjectRoot.FullName)/Source/$($ProjectType)/"
-    dotnet build   "$($ProjectRoot.FullName)/Source/$($ProjectType)/"
-    dotnet pack    "$($ProjectRoot.FullName)/Source/$($ProjectType)/"
+    dotnet restore          "$($ProjectRoot.FullName)/Source/$($ProjectType)/"
+    dotnet build -c Release "$($ProjectRoot.FullName)/Source/$($ProjectType)/"
+    dotnet pack  -c Release "$($ProjectRoot.FullName)/Source/$($ProjectType)/"
 
     write-warning 'Collecting and publishing resources'
     write-warning "(JPMF.$($ProjectName).$($ProjectType).*nupkg)"
