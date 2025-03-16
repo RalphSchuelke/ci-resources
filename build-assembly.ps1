@@ -19,6 +19,7 @@ begin
 
 process
 {
+    $Env:GitVersion_NoNormalizeEnabled='true'
     & "$($ProjectRoot.Fullname)/ci/new-semver.ps1" -BranchName "${Env:APPVEYOR_REPO_BRANCH}"
     dotnet restore "$($ProjectRoot.FullName)/Source/$($ProjectType)/"
     dotnet build   "$($ProjectRoot.FullName)/Source/$($ProjectType)/"
