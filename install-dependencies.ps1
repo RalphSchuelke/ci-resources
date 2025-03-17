@@ -33,6 +33,8 @@ process
       Install-PsResource @tool -Scope CurrentUser -verbose
       Update-PsResource @tool -Scope CurrentUser -Verbose
 
+      write-warning "Using PS $PsEdition version = $($PsVersionTable.PSVersion)"
+
       foreach($psmodpath in ($Env:PsModulePath -Split ([io.path]::PathSeparator)))
       {
       Write-warning "Searching for module in $($psmodpath)"
