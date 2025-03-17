@@ -20,8 +20,9 @@ begin
 process
 {
     $Env:GitVersion_NoNormalizeEnabled='true'
-    #& "$($ProjectRoot.Fullname)/ci/new-semver.ps1" -BranchName "${Env:APPVEYOR_REPO_BRANCH}"
+    enable-proxy
     dotnet restore          "$($ProjectRoot.FullName)/Source/$($ProjectType)/"
+    disable-proxy
     dotnet build -c Release "$($ProjectRoot.FullName)/Source/$($ProjectType)/"
     dotnet pack  -c Release "$($ProjectRoot.FullName)/Source/$($ProjectType)/"
 

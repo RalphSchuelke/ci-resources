@@ -6,10 +6,6 @@ Param
 
 begin
 {
-    # exactly WHY do things fail without this?
-    $null=    new-item -itemtype directory -path $PWD -name appveyorTemp -verbose
-    
-#    & "$PSScriptroot/new-temprepo.ps1" -repoName $Env:APPVEYOR_PROJECT_NAME
     $errorActionPreference = 'Stop'
     if($null -eq ( Get-Command dotnet ))
     {
@@ -19,9 +15,10 @@ begin
 
 process
 {
+    enable-proxy
     dotnet tool restore --tool-manifest ci/.config/dotnet-tools.json
     Install-PsResource $ModuleList -Scope CurrentUser
     Update-PsResource $ModuleList -Scope CurrentUser
-
+    disable-proxy
     Import-module -Name $ModuleList
 }
