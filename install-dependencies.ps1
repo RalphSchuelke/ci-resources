@@ -33,7 +33,7 @@ process
       Install-PsResource @tool -Scope CurrentUser -verbose
       Update-PsResource @tool -Scope CurrentUser -Verbose
 
-      foreach($psmodpath in ($Env:PsModulePath -Split ([io.path]::PathSeparator))
+      foreach($psmodpath in ($Env:PsModulePath -Split ([io.path]::PathSeparator)))
       {
       Write-warning "Searching for module in $($psmodpath)"
 }
