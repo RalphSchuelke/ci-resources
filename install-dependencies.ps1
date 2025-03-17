@@ -35,11 +35,9 @@ process
 
       write-warning "Using PS $PsEdition version = $($PsVersionTable.PSVersion)"
 
-      foreach($psmodpath in ($Env:PsModulePath -Split ([io.path]::PathSeparator)))
-      {
-      Write-warning "Searching for module in $($psmodpath)"
-}
-
+      $psVersionModPath = if($PsEdition-eq 'Core'){'PowerShell'}else{'WindowsPowerShell'}
+      $Env:PsModulePath = '{1}/Documents/{2}\Modules{0}{3}' -f ([io.path]::pathseparator), $Env:UserProfile, $PsVersionModPath, $env:PsModulePath
+      write-warning "Using module path = ${Env:PsModulePath}"
       Import-Module -Name $tool.Name -RequiredVersion $Tool.Version -Verbose
 
     }
