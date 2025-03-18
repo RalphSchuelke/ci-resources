@@ -103,8 +103,8 @@ This file is intended to hold private information, such as private keys for nuge
 
   <Target AfterTargets="Pack" Name="DeployNuPkgBinaries"  Condition="$(DoNotSign)!=true" DependsOnTargets="GetVersion">
     <!-- <Message Text="Processing: %(PackagesToCopy.Identity)" Importance="High" /> -->
-    <Exec Command="dotnet nuget sign &quot;$([System.IO.Path]::Combine('$(PackageOutputPath)', '$(PackageId).$(GitVersion_SemVer)')).nupkg&quot;  --certificate-fingerprint $(NuGetSignatureThumb) --timestamper $(TimestampServiceURL)" />
-    <Exec Command="dotnet nuget sign &quot;$([System.IO.Path]::Combine('$(PackageOutputPath)', '$(PackageId).$(GitVersion_SemVer)')).snupkg&quot; --certificate-fingerprint $(NuGetSignatureThumb) --timestamper $(TimestampServiceURL)" />
+    <Exec Command="dotnet nuget sign &quot;$([System.IO.Path]::Combine('$(PackageOutputPath)', '$(PackageId).$(GitVersion_SemVer)')).nupkg&quot;  --certificate-fingerprint $(NuGetSignatureThumb) --timestamper $(TimestampServiceURL)" ContinueOnError="WarnAndContinue" />
+    <Exec Command="dotnet nuget sign &quot;$([System.IO.Path]::Combine('$(PackageOutputPath)', '$(PackageId).$(GitVersion_SemVer)')).snupkg&quot; --certificate-fingerprint $(NuGetSignatureThumb) --timestamper $(TimestampServiceURL)" ContinueOnError="WarnAndContinue" />
   </Target>
   <ItemGroup>
     <None Include="$(ProjectTop)/icon.png"  Pack="true" PackagePath="" />
