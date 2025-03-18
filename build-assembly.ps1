@@ -23,7 +23,7 @@ process
     enable-proxy
     dotnet restore          "$($ProjectRoot.FullName)/Source/$($ProjectType)/"
     disable-proxy
-    dotnet build -c Release "$($ProjectRoot.FullName)/Source/$($ProjectType)/"
+    #dotnet build -c Release "$($ProjectRoot.FullName)/Source/$($ProjectType)/"
     dotnet pack  -c Release "$($ProjectRoot.FullName)/Source/$($ProjectType)/"
 
     write-warning 'Collecting and publishing resources'
