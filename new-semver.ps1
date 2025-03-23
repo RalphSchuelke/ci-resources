@@ -7,7 +7,11 @@ Param
 begin
 {
 $errorActionPreference = 'Stop'
-disable-proxy
+    disable-proxy
+
+    # As of Mar 22, 2025 we (still) need to reference net8 8.0.13
+    # for gitversion.tool to run.
+    ci/dotnet-install.ps1 -Version 8.0.13 -Runtime dotnet
 }
 process
 {
