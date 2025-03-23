@@ -9,7 +9,10 @@ Param
     [directoryinfo]$ProjectRoot = "$PSScriptRoot/..",
 
     [parameter()]
-    [string]$ProjectName = $Env:APPVEYOR_PROJECT_NAME
+    [string]$ProjectName = $Env:APPVEYOR_PROJECT_NAME,
+
+    [parameter()]
+    [string]$DotNetRoot = "$($Env:LOCALAPPDATA/Microsoft/dotnet)"
 )
 
 begin
@@ -19,6 +22,12 @@ begin
 
 process
 {
+    If((Test-Path $DOTNETROOT)-eq$false)
+    {
+	throw new-object exception ".NET root path: not found: $($dotnetroot)"
+    }
+    $env:DOTNET_ROOT=$dotnetROOT
+
     $Env:GitVersion_NoNormalizeEnabled='true'
     enable-proxy
     dotnet restore          "$($ProjectRoot.FullName)/Source/$($ProjectType)/"
