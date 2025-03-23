@@ -29,7 +29,7 @@ process
     # - verify nuget (if any) has been signed
     # - maybe more
     # Only after that can we publish.
-    foreach($assembly in get-childitem -recurse -verbose -force -path $moduleLocation.fullname -filter jpmf.*)
+    foreach($assembly in get-childitem -recurse -force -path $moduleLocation.fullname -filter jpmf.*)
     {
 	switch($assembly.Extension)
 	{
