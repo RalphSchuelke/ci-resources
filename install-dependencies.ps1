@@ -30,8 +30,8 @@ process
     # or an older version is present (update).
     # -Module in turn uses the classical minimum/maximum/requiredversion specifiers.
     
-      Install-PsResource @tool -Scope CurrentUser -verbose
-      Update-PsResource @tool -Scope CurrentUser -Verbose
+      Install-PsResource @tool -Scope CurrentUser
+      Update-PsResource @tool -Scope CurrentUser
 
       write-warning "Using PS $PsEdition version = $($PsVersionTable.PSVersion)"
 
