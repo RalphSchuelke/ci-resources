@@ -16,5 +16,6 @@ $errorActionPreference = 'Stop'
 process
 {
     get-command dotnet
+    dotnet --info
  dotnet gitversion /output buildserver /nonormalize /b $BranchName
 }
