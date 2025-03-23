@@ -12,7 +12,7 @@ Param
     [string]$ProjectName = $Env:APPVEYOR_PROJECT_NAME,
 
     [parameter()]
-    [string]$DotNetRoot = "$($Env:LOCALAPPDATA/Microsoft/dotnet)"
+    [string]$DotNetRoot = "$($Env:LOCALAPPDATA)/Microsoft/dotnet"
 )
 
 begin
