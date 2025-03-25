@@ -34,7 +34,7 @@ process
 	else
 	{
 	    write-warning "Resource repo $($item.Name) seems broken; removing it."
-	    $item | Remove-PsResourceRepository -Verbose -Force -ErrorAction Continue
+	    $item | Unregister-PsResourceRepository -Verbose -ErrorAction Continue
 	}
     }
 
