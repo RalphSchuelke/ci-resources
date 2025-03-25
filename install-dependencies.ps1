@@ -38,7 +38,7 @@ process
       $Env:PsModulePath = '{1}/Documents/{2}\Modules{0}{3}' -f ([io.path]::pathseparator), $Env:UserProfile, $PsVersionModPath, $env:PsModulePath
 	write-verbose "Using module path = ${Env:PsModulePath}"
 	Write-Verbose "Importing module = $($tool.Name); version = $($tool.Version)"
-	Import-Module -Name $tool.Name -RequiredVersion $Tool.Version -ErrorAction Continue
+	Import-Module -Name $tool.Name -RequiredVersion $Tool.Version -ErrorAction SilentlyContinue
 
     }
 }
