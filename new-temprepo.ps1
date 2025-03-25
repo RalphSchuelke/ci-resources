@@ -24,6 +24,21 @@ $errorActionPreference = 'Stop'
 }
 process
 {
+
+    foreach($item in Get-PSResourceRepository | Where-Object Uri -Match '^file')
+    {
+	If(test-path $item.Uri.LocalPath)
+	{
+	    write-verbose "Maintaining resource repo at $($item.Uri.LocalPath)"
+	}
+	else
+	{
+	    write-warning "Resource repo $($item.Name) seems broken; removing it."
+	    $item | Remove-PsResourceRepository -Verbose -Force -ErrorAction Continue
+	}
+    }
+
+    
     try
     {
 	Unregister-PsResourceRepository -Name $RepoName
