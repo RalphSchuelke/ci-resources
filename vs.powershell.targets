@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <!-- Note that most version specs in here are useless and that Directory.Packages.props maps versions -->
+
+  <!-- Add beta support framework. Probably not complete, but then, it's beta.  -->
+  <PropertyGroup Condition="$(UsePsBeta)=='true'">
+    <TargetFrameworks>$(TargetFrameworks);net10.0</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup><!-- Pester does not seem to contain framework-specific dependencies. -->
+    <PackageReference Include="Pester" />
+  </ItemGroup>
+  <!-- All PowerShell versions require Microsoft.PowerShell.SDK except for Windows PS (5.1)
+       which takes PowerShellStandard.Library
+
+Powershell is tightly coupled to its TFM; eg
+- PS 7.4.x will require net8;
+- PS 7.5.x will require net9
+and so on. So we need a splitter to match PS supported to TFM selected.
+    -->
+  <ItemGroup Condition="$(TargetFramework.StartsWith(`net4`))!='true' And $(TargetFramework.StartsWith(`netstandard`))!=true">
+   <PackageReference Include="Microsoft.PowerShell.SDK" />
+  </ItemGroup>
+  <!-- note: we're trying to deprecate netstandard2 support and use fully-featured tfms
+       and then select backend via $PsEdition PS builtin variable as needed.
+  -->
+  <ItemGroup Condition="
+			'$(UseNetStandard)' == 'true' Or
+			$(TargetFramework.StartsWith(`net4`))=='true' Or
+			$(TargetFramework.StartsWith(`netstandard`)) == 'true'
+">
+    <PackageReference Include="PowerShellStandard.Library" />
+  </ItemGroup>
+
+   <PropertyGroup>
+    <PsTargetsImported>true</PsTargetsImported>
+    </PropertyGroup>
+</Project>
