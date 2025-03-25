@@ -38,7 +38,16 @@ process
       $Env:PsModulePath = '{1}/Documents/{2}\Modules{0}{3}' -f ([io.path]::pathseparator), $Env:UserProfile, $PsVersionModPath, $env:PsModulePath
 	write-verbose "Using module path = ${Env:PsModulePath}"
 	Write-Verbose "Importing module = $($tool.Name); version = $($tool.Version)"
-	Import-Module -Name $tool.Name -RequiredVersion $Tool.Version -ErrorAction SilentlyContinue
+	If(($testmod = Get-Module -Name $tool.Name)-eq $null)
+	{
+	    write-verbose "Importing $($tool.Name)"
+	    Import-Module -Name $tool.Name -RequiredVersion $Tool.Version -Verbose:$false
+	}
+	else
+	{
+	    Write-Verbose "Using existing module ($($testmod.Version))"
+	}
+	
 
     }
 }
