@@ -38,7 +38,7 @@ This file is intended to hold private information, such as private keys for nuge
 -->
 <Project>
   <PropertyGroup Condition="$(APPVEYOR_REPO_PROVIDER) == gitHub">
-        <PackageProjectUrl>https://github.com/$(APPVEYOR_REPO_NAME)/$(APPVEYOR_PROJECT_NAME)</PackageProjectUrl>
+        <PackageProjectUrl>https://github.com/$(APPVEYOR_REPO_NAME)</PackageProjectUrl>
   </PropertyGroup>
   <PropertyGroup>
     <CopyrightHolder Condition="$(CopyrightHolder)==''">$(APPVEYOR_REPO_COMMIT_AUTHOR)</CopyrightHolder>
