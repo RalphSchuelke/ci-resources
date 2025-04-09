@@ -55,7 +55,7 @@ This file is intended to hold private information, such as private keys for nuge
       This is a JPMF package.
     </Description>
     <!--    <PackageId>$(MSBuildProjectName)</PackageId> -->
-    <Authors>$(APPVEYOR_COMMIT_AUTHOR)</Authors>
+    <Authors>$(APPVEYOR_REPO_COMMIT_AUTHOR)</Authors>
     <Company>$(CompanyName)</Company>
     <PackageProjectUrl Condition="$(UseProjectUrl)!=''">$(UseProjectUrl)</PackageProjectUrl>
     <PackageLicenseExpression Condition="$(License)==''">MIT</PackageLicenseExpression>
