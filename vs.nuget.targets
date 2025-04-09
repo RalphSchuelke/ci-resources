@@ -87,15 +87,6 @@ This file is intended to hold private information, such as private keys for nuge
   <PropertyGroup Condition="'$(UsePs)' != '' ">
     <PackageTags>$(PackageTags) PowerShell</PackageTags>
   </PropertyGroup>
-  <Target Condition="!Exists('$(SolutionDir)README.md')" Name="SetupReadme" BeforeTargets="Compile" >
-    <!--
-	<Copy
-	ContinueOnError="WarnAndContinue"
-	SourceFiles="$(ProjectTop)/README.md"
-	DestinationFolder="$(SolutionDir)"
-	/>
-    -->
-  </Target>
   <Target Name="PreDeployNuPkg" BeforeTargets="Pack" DependsOnTargets="GetVersion">
     <Message Importance="High" Text="Preparing to deploy nupkg and snupkg for" />
     <Message Importance="High" Text="$(PackageId) - $(GitVersion_InformationalVersion)" />
@@ -111,13 +102,9 @@ This file is intended to hold private information, such as private keys for nuge
     <None Include="$(ProjectTop)/README.md" Pack="true" PackagePath="" />
   </ItemGroup>
   <!--
-      When preleasetag is set but prereleaselabel is not, we get a faulty version string and build fails because of it.
-      So, if that happens, we tag the build as alpha.
+      Note: PackageVersion is managed by GitVersion. Manipulating it has no effect; to mess with PackageVersion we must mess with
+      GitVersion.
   -->
-  <PropertyGroup Condition="$(GitVersion_PrereleaseTag)!='' And $(GitVersion_PrereleaseLabel)==''">
-    <PackageVersion>$(GitVersion_MajorMinorPatch)-alpha.$(GitVersion_PrereleaseTag).$(GitVersion_WeightedPrereleaseNumber)</PackageVersion>
-  </PropertyGroup>
-
   <PropertyGroup>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageIcon>icon.png</PackageIcon>
