@@ -1,12 +1,10 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 
 <!-- NuGet requires license model to be declared -->
 <!--
 Variables to set for usage:
-- GhOwner
-- GhProject
+
 - CopyrightHolder
-- Author
 - CompanyName
 
 - Description, if set, will be set as package description.
@@ -16,7 +14,6 @@ Variables to set for usage:
 
 - License is set to MIT by default but can be overridden by passing $(License).
 - If UsePs is set to any value other than an empty string, Powershell will be added to tag list.
-- If UseBeta is true then this will output a prerelease package.
 
 - If UseProjectUrl is set to something, this value will be used as a project url reference.
 
@@ -40,7 +37,11 @@ This file is intended to hold private information, such as private keys for nuge
 
 -->
 <Project>
+  <PropertyGroup Condition="$(APPVEYOR_REPO_PROVIDER) == gitHub">
+        <PackageProjectUrl>https://github.com/$(APPVEYOR_REPO_NAME)/$(APPVEYOR_PROJECT_NAME)</PackageProjectUrl>
+  </PropertyGroup>
   <PropertyGroup>
+    <CopyrightHolder Condition="$(CopyrightHolder)==''">$(APPVEYOR_REPO_COMMIT_AUTHOR)</CopyrightHolder>
     <ProjectTop>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)','..'))</ProjectTop>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <UpdateVersionProperties>true</UpdateVersionProperties>
@@ -54,9 +55,8 @@ This file is intended to hold private information, such as private keys for nuge
       This is a JPMF package.
     </Description>
     <!--    <PackageId>$(MSBuildProjectName)</PackageId> -->
-    <Authors>$(Author)</Authors>
+    <Authors>$(APPVEYOR_COMMIT_AUTHOR)</Authors>
     <Company>$(CompanyName)</Company>
-    <PackageProjectUrl Condition="$(UseProjectUrl)==''">https://github.com/$(GhOwner)/$(GhProject)</PackageProjectUrl>
     <PackageProjectUrl Condition="$(UseProjectUrl)!=''">$(UseProjectUrl)</PackageProjectUrl>
     <PackageLicenseExpression Condition="$(License)==''">MIT</PackageLicenseExpression>
     <PackageLicenseExpression Condition="$(License)!=''">$(License)</PackageLicenseExpression>
@@ -111,8 +111,8 @@ This file is intended to hold private information, such as private keys for nuge
     <None Include="$(ProjectTop)/README.md" Pack="true" PackagePath="" />
   </ItemGroup>
 
-  <PropertyGroup Condition="$(UseBeta)=='true'">
-    <PackageVersion>$(PackageVersion)-beta</PackageVersion>
+  <PropertyGroup Condition="$(GitVersion_PrereleaseTag)!=''">
+    <PackageVersion>$(PackageVersion)-beta.$(GitVersion_PrereleaseTag)</PackageVersion>
   </PropertyGroup>
 
   <PropertyGroup>
