@@ -110,9 +110,12 @@ This file is intended to hold private information, such as private keys for nuge
     <None Include="$(ProjectTop)/icon.png"  Pack="true" PackagePath="" />
     <None Include="$(ProjectTop)/README.md" Pack="true" PackagePath="" />
   </ItemGroup>
-
-  <PropertyGroup Condition="$(GitVersion_PrereleaseTag)!=''">
-    <PackageVersion>$(PackageVersion)-beta.$(GitVersion_PrereleaseTag)</PackageVersion>
+  <!--
+      When preleasetag is set but prereleaselabel is not, we get a faulty version string and build fails because of it.
+      So, if that happens, we tag the build as alpha.
+  -->
+  <PropertyGroup Condition="$(GitVersion_PrereleaseTag)!='' And $(GitVersion_PrereleaseLabel)==''">
+    <PackageVersion>$(GitVersion_MajorMinorPatch)-alpha.$(GitVersion_PrereleaseTag).$(GitVersion_WeightedPrereleaseNumber)</PackageVersion>
   </PropertyGroup>
 
   <PropertyGroup>
