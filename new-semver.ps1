@@ -10,7 +10,7 @@ Param
 begin
 {
 $errorActionPreference = 'Stop'
-   & ./disable-proxy
+   & ./disable-proxy.ps1
 
     # As of Mar 22, 2025 we (still) need to reference net8 8.0.13
     # for gitversion.tool to run.
