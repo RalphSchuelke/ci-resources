@@ -44,7 +44,7 @@ process
   # We're not going to be able to hold this assumption for pure cmdlet projects. But it should probably work anyway (hopefully) on the assumption cmdlet projects do not require *additional* resources.
   # Well, except of course the powershell related packages. /shrug
   
-    foreach($project in get-childitem -LiteralPath ('{1}{0}{2}{0}{3}' -f [path]::DirectorySeparatorChar, $ProjectRoot.FullName, 'Source' ) -Filter "$($Env:APPVEYOR_PROJECT_NAME).csproj")
+    foreach($project in get-childitem -LiteralPath ('{1}{0}{2}' -f [path]::DirectorySeparatorChar, $ProjectRoot.FullName, 'Source' ) -Filter "$($Env:APPVEYOR_PROJECT_NAME).csproj")
   {
     Write-Verbose "Processing project: $($Project.Name) ($($Project.directory.fullname))"
     Start-Process -Wait -NoNewWindow dotnet -ArgumentList 'restore', ('"{0}"' -f $project.fullname)
