@@ -2,7 +2,11 @@ using namespace System.IO
 [cmdletbinding()]
 Param
 (
-  [DirectoryInfo]$ProjectRoot = $PSScriptRoot
+  [parameter()]
+  [validatescript({($_|get-item).exists})]
+  [DirectoryInfo]$ProjectRoot = $env:APPVEYOR_BUILD_FOLDER,
+  [parameter(Mandatory)]
+  [DirectoryInfo]$CiPath
 )
 
 begin
@@ -12,7 +16,7 @@ begin
 
   # update search path to include ourselves - this means preferring what we have over everything else
   # We also set up proxy cfg here.
-  $env:Path = $ProjectRoot.FullName + [path]::PathSeparator + $env:Path
+  $env:Path = $CiPath.FullName + [path]::PathSeparator + $env:Path
   Write-Verbose "Setting search path to [$($env:Path)"
   
   enable-proxy
@@ -26,7 +30,7 @@ process
    
   
   # Restore (all) cs projects as that's what's going to require network access.
-  foreach($project in get-childitem -LiteralPath $ProjectRoot.FullName -Recurse -Force)
+  foreach($project in get-childitem -LiteralPath $ProjectRoot.FullName -Recurse -Force -Filter '*.csproj')
   {
     Write-Verbose "Processing project: $($Project.Name) ($($Project.directory.fullname))"
     Start-Process -Wait -NoNewWindow dotnet -ArgumentList 'restore', ('"{0}"' -f $project.fullname)
