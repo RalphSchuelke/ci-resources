@@ -37,8 +37,8 @@ process
     Write-Verbose 'Note: Not updating nuget network connection details (connect immediately)'
   }
   Write-verbose 'Running command:' 
-  write-host Start-Process -Wait -NoNewWindow dotnet -ArgumentList 'tool', 'restore', '--tool-manifest', ( '"{0}{1}.config{1}dotnet-tools.json"' -f $CiPath.FullName, [Path]::PathSeparator )
-  Start-Process -Wait -NoNewWindow dotnet -ArgumentList 'tool', 'restore', '--tool-manifest', ( '"{0}{1}.config{1}dotnet-tools.json"' -f $CiPath.FullName, [path]::PathSeparator )
+  write-host Start-Process -Wait -NoNewWindow dotnet -ArgumentList 'tool', 'restore', '--tool-manifest', ( '"{0}{1}.config{1}dotnet-tools.json"' -f $CiPath.FullName, [Path]::DirectorySeparatorChar )
+  Start-Process -Wait -NoNewWindow dotnet -ArgumentList 'tool', 'restore', '--tool-manifest', ( '"{0}{1}.config{1}dotnet-tools.json"' -f $CiPath.FullName, [path]::DirectorySeparatorChar )
    
   
   # Restore (all) cs projects as that's what's going to require network access.
