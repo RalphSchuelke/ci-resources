@@ -30,13 +30,14 @@ process
   if($env:http_proxy.length -gt 0)
   {
     Write-Verbose "Set nuget proxy to $($env:http_proxy)"
-  Start-Process -Wait -NoNewWindow   dotnet -ArgumentList  'nuget', 'config', 'set', 'http_proxy', ('"{0}"' -f $env:http_proxy)
+    Start-Process -Wait -NoNewWindow   dotnet -ArgumentList  'nuget', 'config', 'set', 'http_proxy', ('"{0}"' -f $env:http_proxy)
   }
   else
   {
     Write-Verbose 'Note: Not updating nuget network connection details (connect immediately)'
   }
-   
+  Write-verbose 'Running command:' 
+  write-host Start-Process -Wait -NoNewWindow dotnet -ArgumentList 'tool', 'restore', '--tool-manifest', ( '"{0}{1}.config{1}dotnet-tools.json"' -f $CiPath.FullName, [Path]::PathSeparator )
   Start-Process -Wait -NoNewWindow dotnet -ArgumentList 'tool', 'restore', '--tool-manifest', ( '"{0}{1}.config{1}dotnet-tools.json"' -f $CiPath.FullName, [path]::PathSeparator )
    
   
