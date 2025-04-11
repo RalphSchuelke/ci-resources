@@ -19,14 +19,25 @@ begin
   $env:Path = $CiPath.FullName + [path]::PathSeparator + $env:Path
   Write-Verbose "Setting search path to [$($env:Path)"
   
-  enable-proxy
+  enable-proxy  
 }
 process
 {
 
   # set up dotnet and dotnet-tools
-   dotnet-install -JsonFile ${Env:APPVEYOR_BUILD_FOLDER}/global.json -AzureFeed $Env:CI_RES_ROOT
-   Start-Process -Wait -NoNewWindow dotnet -ArgumentList 'tool', 'restore', '--tool-manifest', ( '"{0}{1}.config{1}dotnet-tools.json"' -f $CiPath.FullName, [path]::PathSeparator )
+  dotnet-install -JsonFile ${Env:APPVEYOR_BUILD_FOLDER}/global.json -AzureFeed $Env:CI_RES_ROOT
+   
+  if($env:http_proxy.length -gt 0)
+  {
+    Write-Verbose "Set nuget proxy to $($env:http_proxy)"
+    dotnet nuget config -set http_proxy ('"{0}"' -f $env:http_proxy)
+  }
+  else
+  {
+    Write-Verbose 'Note: Not updating nuget network connection details (connect immediately)'
+  }
+   
+  Start-Process -Wait -NoNewWindow dotnet -ArgumentList 'tool', 'restore', '--tool-manifest', ( '"{0}{1}.config{1}dotnet-tools.json"' -f $CiPath.FullName, [path]::PathSeparator )
    
   
   # Restore (all) cs projects as that's what's going to require network access.
