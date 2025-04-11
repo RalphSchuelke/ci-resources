@@ -39,8 +39,7 @@ process
   Write-verbose 'Running command:' 
   write-host Start-Process -Wait -NoNewWindow dotnet -ArgumentList 'tool', 'restore', '--tool-manifest', ( '"{0}{1}.config{1}dotnet-tools.json"' -f $CiPath.FullName, [Path]::DirectorySeparatorChar )
   Start-Process -Wait -NoNewWindow dotnet -ArgumentList 'tool', 'restore', '--tool-manifest', ( '"{0}{1}.config{1}dotnet-tools.json"' -f $CiPath.FullName, [path]::DirectorySeparatorChar )
-   
-  
+      
   # Restore (all) cs projects as that's what's going to require network access.
   # Note; we're doing a leap of faith here and ASSUME any and all external refs have gone into, or were at least cached by, the backend project.
   # We're not going to be able to hold this assumption for pure cmdlet projects. But it should probably work anyway (hopefully) on the assumption cmdlet projects do not require *additional* resources.
@@ -57,5 +56,9 @@ end
 {
   # clean up env
   disable-proxy 
+  
+  # Preconfigure versioning. Note; we may have to do this offline (ie, without external access). 
+  new-semver -BranchName $env:APPVEYOR_REPO_BRANCH
+  
   $VerbosePreference = 'silentlycontinue'
 }
