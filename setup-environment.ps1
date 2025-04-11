@@ -26,7 +26,7 @@ process
 
   # set up dotnet and dotnet-tools
    dotnet-install -JsonFile ${Env:APPVEYOR_BUILD_FOLDER}/global.json -AzureFeed $Env:CI_RES_ROOT
-   Start-Process -Wait -NoNewWindow dotnet -ArgumentList 'tool', 'restore', '--tool-manifest', ( '"{0}{1}.config{1}dotnet-tools.json"' -f $ProjectRoot.FullName, [path]::PathSeparator )
+   Start-Process -Wait -NoNewWindow dotnet -ArgumentList 'tool', 'restore', '--tool-manifest', ( '"{0}{1}.config{1}dotnet-tools.json"' -f $CiPath.FullName, [path]::PathSeparator )
    
   
   # Restore (all) cs projects as that's what's going to require network access.
