@@ -30,7 +30,7 @@ process
   if($env:http_proxy.length -gt 0)
   {
     Write-Verbose "Set nuget proxy to $($env:http_proxy)"
-    dotnet nuget config -set http_proxy ('"{0}"' -f $env:http_proxy)
+  Start-Process -Wait -NoNewWindow   dotnet -ArgumentList  'nuget', 'config', '-set', 'http_proxy', ('"{0}"' -f $env:http_proxy)
   }
   else
   {
