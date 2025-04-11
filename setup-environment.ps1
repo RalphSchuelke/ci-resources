@@ -42,7 +42,11 @@ process
    
   
   # Restore (all) cs projects as that's what's going to require network access.
-  foreach($project in get-childitem -LiteralPath $ProjectRoot.FullName -Recurse -Force -Filter '*.csproj')
+  # Note; we're doing a leap of faith here and ASSUME any and all external refs have gone into, or were at least cached by, the backend project.
+  # We're not going to be able to hold this assumption for pure cmdlet projects. But it should probably work anyway (hopefully) on the assumption cmdlet projects do not require *additional* resources.
+  # Well, except of course the powershell related packages. /shrug
+  
+  foreach($project in get-childitem -LiteralPath ('{1}{0}{2}{0}{3}' -f [path]::DirectorySeparatorChar, $ProjectRoot.FullName, 'Source','Backend' ) -Filter '*.csproj')
   {
     Write-Verbose "Processing project: $($Project.Name) ($($Project.directory.fullname))"
     Start-Process -Wait -NoNewWindow dotnet -ArgumentList 'restore', ('"{0}"' -f $project.fullname)
