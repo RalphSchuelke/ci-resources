@@ -1,7 +1,7 @@
 BeforeAll -Scriptblock {
   [system.io.directoryinfo] $testHome = "$psscriptroot/.."
   [system.io.directoryinfo] $modHome = $testHome.Parent
-  [string]$ModName = $modHome.Name
+    [string]$ModName = $Env:Powershell_Module_Name
   
     Write-Warning "Mod home = $($modhome.fullname)"
     Write-Warning "Mod name = $($Env:Powershell_Module_Name)"
@@ -15,7 +15,7 @@ BeforeAll -Scriptblock {
     write-warning 'work folder already clean'
   }
   ModuleBuilder\Build-Module -SourcePath $modHome.FullName -OutputDirectory "$($modHome.FullName)/Module-Test" -ErrorAction Stop
-  Import-Module -Name "$($modHome.FullName)/Module-Test/$($modName)" -ErrorAction Stop 
+  Import-Module -Name "$($modHome.FullName)/Module-Test/$($modName)" -ErrorAction Stop
 }
 
 Describe "Module layout" -Fixture {
