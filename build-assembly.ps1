@@ -43,7 +43,7 @@ process
     # We do not guarantee internet access at this point.
 
     # Lookup project. There should be only one so named.
-    $MyProjectFile = Get-Childitem -Literalpath $ProjectRoot.FullName -Filter "${ProjectName}.csproj"
+    $MyProjectFile = Get-Childitem -Literalpath $ProjectRoot.FullName -Filter "${ProjectName}.csproj" -Recurse
     If($MyProjectFile.Count -ne 1)
     {
 	throw new-object exception "Could not identify project file to build $ProjectName."
