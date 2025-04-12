@@ -25,7 +25,7 @@ process
 {
 
   # set up dotnet and dotnet-tools
-  dotnet-install -JsonFile ${Env:APPVEYOR_BUILD_FOLDER}/global.json -AzureFeed $Env:CI_RES_ROOT
+    dotnet-install -JsonFile ${Env:APPVEYOR_BUILD_FOLDER}/global.json -AzureFeed $Env:CI_RES_ROOT -Verbose:$False
    
   if($env:http_proxy.length -gt 0)
   {
