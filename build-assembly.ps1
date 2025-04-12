@@ -3,6 +3,10 @@ using namespace system.io
 Param
 (
     [parameter()]
+    [validateset('Debug','Release','')]
+    [allownullorempty()]
+    [string]$ProjectConfiguration = $Env:Configuration
+    [parameter()]
     [validateset('Backend','Cmdlet')]
     [string]$ProjectType = 'Backend',
     [parameter()]
@@ -22,6 +26,12 @@ begin
 
 process
 {
+    If($ProjectConfiguration.Length -eq 0)
+    {
+	write-warning 'No project configuration specified. Defaulting to DEBUG.'
+	$ProjectConfiguration = 'Debug'
+    }
+    
     If((Test-Path $DOTNETROOT)-eq$false)
     {
 	throw new-object exception ".NET root path: not found: $($dotnetroot)"
@@ -29,14 +39,21 @@ process
     $env:DOTNET_ROOT=$dotnetROOT
 
     $Env:GitVersion_NoNormalizeEnabled='true'
-    enable-proxy
-    dotnet restore          "$($ProjectRoot.FullName)/Source/$($ProjectType)/"
-    disable-proxy
-    dotnet build -c Release "$($ProjectRoot.FullName)/Source/$($ProjectType)/"
-    dotnet pack  -c Release "$($ProjectRoot.FullName)/Source/$($ProjectType)/"
+    # Note: dotnet restore is implied. It should have run earlier (esp in proxied networks).
+    # We do not guarantee internet access at this point.
+
+    # Lookup project. There should be only one so named.
+    $MyProjectFile = Get-Childitem -Literalpath $ProjectRoot.FullName -Filter "${ProjectName}.csproj"
+    If($MyProjectFile.Count -ne 1)
+    {
+	throw new-object exception "Could not identify project file to build $ProjectName."
+    }
+    
+    dotnet build -c $ProjectConfiguration ('"{0}"' -f $MyProjectFile.Fullname)
+    dotnet pack  -c $ProjectConfiguration ('"{0}"' -f $MyProjectFile.Fullname)
 
     write-warning 'Collecting and publishing resources'
-    write-warning "(JPMF.$($ProjectName).$($ProjectType).*nupkg)"
+    write-warning "(JPMF.${$ProjectName}.$($Env:GitVersion_SemVer).*nupkg)"
 
     foreach($package in Get-childitem -LiteralPath $ProjectRoot.FullName -recurse -force -filter "JPMF.$($ProjectName).$($ProjectType).*nupkg")
     {
