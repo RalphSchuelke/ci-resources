@@ -21,7 +21,7 @@ Describe "CS files" -Fixture {
     {
     $ns = select-string -pattern '^\s*namespace\s+(.*)$' -Path $file.fullname
 
-    [microsoft.powershell.commands.matchinfo[]] $classIndicator = Select-String '^\s*[^/].+\b(interface|class|enum)\s+(?<className>[^ :]+):?.*$'  -Path $file.FullName
+    [microsoft.powershell.commands.matchinfo[]] $classIndicator = Select-String '^\s*[^/]+\b(interface|class|enum)\s+(?<className>[^ :]+):?.*$'  -Path $file.FullName
 
     #	write-warning "for element = $($file.name)"
     #	write-warning "testcase len = $($testcases.count)"
