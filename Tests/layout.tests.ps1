@@ -4,7 +4,7 @@ BeforeAll -Scriptblock {
   [string]$ModName = $modHome.Name
   
     Write-Warning "Mod home = $($modhome.fullname)"
-    Write-Warning "Mod name = $Env:Powershell_Module_Name
+    Write-Warning "Mod name = $($Env:Powershell_Module_Name)"
 
   try
   {
