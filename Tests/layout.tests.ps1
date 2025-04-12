@@ -3,13 +3,9 @@ BeforeAll -Scriptblock {
   [system.io.directoryinfo] $modHome = $testHome.Parent
   [string]$ModName = $modHome.Name
   
-  Write-Warning "Mod home = $($modhome.fullname)"
-  Write-Warning "Mod name = $($ModName)"
-  
-  if($env:APPVEYOR_JOB_ID)
-  {
-    $modName = $modName -replace [Regex]::Escape(('-'+$Env:AppVeyor_Job_Id)), ''
-  }
+    Write-Warning "Mod home = $($modhome.fullname)"
+    Write-Warning "Mod name = $Env:Powershell_Module_Name
+
   try
   {
     Remove-Item "$($modHome.FullName)/Module-Test/$($modName)" -Recurse -Force -ErrorAction Stop
@@ -26,12 +22,7 @@ Describe "Module layout" -Fixture {
   [System.Collections.Generic.List[hashtable]] $TestCases = @()
   [system.io.directoryinfo] $testHome = "$psscriptroot/.."
   [system.io.directoryinfo] $modHome = $testHome.Parent
-  [string]$ModName = $modHome.Name
-
-  if($env:APPVEYOR_JOB_ID)
-  {
-    $modName = $modName -replace [Regex]::Escape(('-'+$Env:AppVeyor_Job_Id)), ''
-  }
+    [string]$ModName = $Env:Powershell_Module_Name
 
   # [psmoduleinfo] $manifest = Get-Module "$($modHome.Fullname)/Module-Test/$($modName)" -ErrorAction silentlycontinue -ListAvailable
   [psmoduleinfo] $manifest = Test-ModuleManifest "$($modHome.Fullname)/Module-Test/$($modName)/*/$($modName).psd1" -ErrorAction Stop

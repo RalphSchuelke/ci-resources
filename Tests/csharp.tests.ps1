@@ -1,15 +1,13 @@
 BeforeAll {}
 
+# TODO: This test seems to hold both CS and cmdlet references. Clean that up, so that we can split cs and cmdlet.
+
 Describe "CS files" -Fixture {
     [system.io.directoryinfo] $testHome = "$psscriptroot/.."
     [system.io.directoryinfo] $modHome = $testHome.Parent
-    [string]$ModName = $modHome.Name
+    [string]$ModName = $Env:Powershell_Module_Name
     Write-Warning "mod home = $($modhome.fullname)"
     #Write-Warning
-  if($env:APPVEYOR_JOB_ID)
-    {
-        $modName = $modName -replace [Regex]::Escape(('-'+$Env:AppVeyor_Job_Id)), ''
-    }
 
     [system.collections.generic.list[hashtable]]$testCases = @()
 
