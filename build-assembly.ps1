@@ -4,7 +4,7 @@ Param
 (
     [parameter()]
     [validateset('Debug','Release','')]
-    [allownullorempty()]
+    [allowemptystring()]
     [string]$ProjectConfiguration = $Env:Configuration,
     [parameter()]
     [validateset('Backend','Cmdlet')]
