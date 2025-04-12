@@ -53,9 +53,9 @@ process
     dotnet pack  -c $ProjectConfiguration ('"{0}"' -f $MyProjectFile.Fullname)
 
     write-warning 'Collecting and publishing resources'
-    write-warning "(JPMF.${$ProjectName}.$($Env:GitVersion_SemVer).*nupkg)"
+    write-warning "($($ProjectName).$($Env:GitVersion_SemVer).*nupkg)"
 
-    foreach($package in Get-childitem -LiteralPath $ProjectRoot.FullName -recurse -force -filter "JPMF.$($ProjectName).$($ProjectType).*nupkg")
+    foreach($package in Get-childitem -LiteralPath $ProjectRoot.FullName -recurse -filter "JPMF.${ProjectName}.*nupkg")
     {
 	Write-Verbose "Processing package: $($Package.FullName)"
 	# note: this presumes repository configuration. Needs fixing.
