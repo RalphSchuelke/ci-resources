@@ -1,9 +1,10 @@
 [cmdletbinding()]
 Param
 (
-    [string]$ProjectName = $Env:APPVEYOR_PROJECT_NAME,
-    [string]$ProjectRoot = $PWD,
-    [string]$ModVersion = $Env:GitVersion_MajorMinorPatch
+    [string]$ProjectName = $Env:Powershell_Module_Name,
+    [string]$ProjectRoot = $Env:APPVEYOR_BUILD_FOLDER,,
+    [string]$ModVersion  = $Env:GitVersion_MajorMinorPatch,
+    [string]$OutputPath  = $Env:APPVEYOR_BUILD_FOLDER
 )
 begin
 {
@@ -42,5 +43,5 @@ process
 	}
     }
   # publish-module can infer version folder. publish-psresource it seems cannot.
-  Publish-PsResource -Path $ModuleLocation.FullName -repository $ProjectName -Verbose -ErrorAction Stop
+  Compress-PsResource -Path $ModuleLocation.FullName -DestinationPath $OutputPath  -Verbose -ErrorAction Stop
 }
