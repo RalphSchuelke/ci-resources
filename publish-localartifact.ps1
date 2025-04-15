@@ -43,5 +43,10 @@ process
 	}
     }
   # publish-module can infer version folder. publish-psresource it seems cannot.
-  Compress-PsResource -Path $ModuleLocation.FullName -DestinationPath $OutputPath  -Verbose -ErrorAction Stop
+    Compress-PsResource -Path $ModuleLocation.FullName -DestinationPath $OutputPath  -Verbose -ErrorAction Stop
+    write-verbose 'Packages available for staging:'
+    foreach($file in  get-childitem -Literalpath $outputpath -filter '*.nupkg' -recurse -verbose -force)
+    {
+	write-verbose "- $($file.fullname)"
+    }
 }
