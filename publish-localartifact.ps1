@@ -2,7 +2,7 @@
 Param
 (
     [string]$ProjectName = $Env:Powershell_Module_Name,
-    [string]$ProjectRoot = $Env:APPVEYOR_BUILD_FOLDER,,
+    [string]$ProjectRoot = $Env:APPVEYOR_BUILD_FOLDER,
     [string]$ModVersion  = $Env:GitVersion_MajorMinorPatch,
     [string]$OutputPath  = $Env:APPVEYOR_BUILD_FOLDER
 )
