@@ -1,0 +1,40 @@
+#!/bin/zsh
+# does this env look okay?
+if [ -z "$APPVEYOR_HOST"]; then
+    echo 'WARN: Appveyor configuration not set. Pleas update your environment.'
+    exit 1;
+fi;
+
+# Identify branch we're working on
+branchPath=$(git symbolic-ref -q HEAD) # Something like refs/heads/myBranchName
+branchName=${branchPath##*/}      # Get text behind the last / of the branch path
+
+# commit id is not strictly necessary, we'll keep this here though for more detailed logging
+# and to try ensuring what we get here is what we'll build.
+# Note that if commit id is empty, unless we catch this ourselves, this will be a valid configuration to pass;
+# identical to not giving commitId at all and therefore building the latest commit.
+# (Which we're trying to do anyway.)
+
+export my_commitId=$(git describe)
+
+# APPVEYOR_TOKEN aside, this will refer back all env vars we're using to be logged somewhere.
+echo "Build this commit on appveyor host = $APPVEYOR_HOST"
+echo "Project = $accountName/$ProjectName"
+echo "Branch = $branchName"
+echo "Commit = $my_commitId"
+
+# Curl must be present for this to work, but curl should be a prereq for git anyway.
+# If one were so inclined though one could consider supporting more tools, such as wget1/2, aria, fetch, ... .
+curl --insecure \
+     -H "Authorization: Bearer ${APPVEYOR_TOKEN}" \
+     -H "Content-Type: application/json" \
+     "${APPVEYOR_HOST}/api/account/${accountName}/builds" \
+     --data-binary "{
+     		   branch: '${branchName}', \
+		   accountName: '${accountName}', \
+		   projectSlug: '${projectName}', \
+		   commitId: '${My_commitId}' \
+}"
+
+# Clean up
+unset My_commitId;
