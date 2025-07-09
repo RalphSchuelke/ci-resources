@@ -19,10 +19,13 @@ Param
 begin
 {
 	$ErroractionPreference = 'Stop'
+	# Scaffolding is very likely to require external net access.
 }
 
 process
 {
+  & "$CiRoot/enable-Proxy.ps1"
+
   & "$CiRoot/new-temprepo.ps1" -repoName $ProjectName
   $null = New-Item ${Env:APPVEYOR_BUILD_BIN_FOLDER}/dotnet -Force -ItemType Directory -Verbose
     # note: something will have to be done to permit passing, and registering, multiple TFM
@@ -48,7 +51,9 @@ process
   & $CiRoot/dotnet-install.ps1 -Channel LTS -AzureFeed $Env:CI_RES_ROOT
   & $CiRoot/dotnet-install.ps1 -JsonFile ${Env:APPVEYOR_BUILD_FOLDER}/global.json -AzureFeed $Env:CI_RES_ROOT
   Get-Item Env:/APPVEYOR* | format-table Name,Value
-   & $CiRoot/install-dependencies.ps1
+  & $CiRoot/install-dependencies.ps1
+
+  & $CiRoot/disable-proxy.ps1
 }
 
 end
