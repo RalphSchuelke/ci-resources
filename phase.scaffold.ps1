@@ -24,7 +24,7 @@ begin
 process
 {
   & "$CiRoot/new-temprepo.ps1" -repoName $ProjectName
-  $null = New-Item ${Env:APPVEYOR_BUILD_BIN_FOLDER}/dotnet -Force -ItemType Directory -Verbose'
+  $null = New-Item ${Env:APPVEYOR_BUILD_BIN_FOLDER}/dotnet -Force -ItemType Directory -Verbose
     # note: something will have to be done to permit passing, and registering, multiple TFM
     # in a single build. Not least because some NET tools may depend on one TFM
     # and we want to build using another. Or several "anothers".
