@@ -6,6 +6,7 @@
 Run tasks post- repository clone.
 
 Should ensure we have a build environment.
+Requires this repository to be present (obviously), so git submodule init/update must come before.
 
 #>
 [cmdletbinding()]
@@ -22,8 +23,6 @@ begin
 
 process
 {
-
-  git submodule update --init
   & "$CiRoot/new-temprepo.ps1" -repoName $ProjectName
   $null = New-Item ${Env:APPVEYOR_BUILD_BIN_FOLDER}/dotnet -Force -ItemType Directory -Verbose'
     # note: something will have to be done to permit passing, and registering, multiple TFM
