@@ -1,12 +1,12 @@
 <#
 .Synopsis
-  Phase-specific tasks -- init
+  Phase-specific tasks -- post test
 
 .Description
-Run tasks pre- repository clone. Can/Should ensure we at least have a git client so that we can do anything.
-
-
+Run tasks after testing. Should contain anything related to deploying the package, as in signing, sealing, and preparing it for publishing it.
+Once done it is to be assumed no further processing will happen except actual deployment of nupkg and, optionally, snupkg.
 #>
+
 [cmdletbinding()]
 Param
 (
@@ -25,8 +25,14 @@ process
   # Note that, at this point, nothing is signed yet -- this will have to go here too (presumably) as signing sealing and packaging is only useful for anything that actually validates. (AND builds.)
 Build-Module   -verbose -OutputDirectory ../Output -SemVer $Env:GitVersion_InformationalVersion
 
-    # publish-module requires dotnet cli, so we need to dotnet-install first.
-#  $CiRoot/publish-localartifact.ps1 -Verbose
+    # note: publish-module requires dotnet cli, so we need to dotnet-install first.
+
+    # todo/fixme: be sure to handle ps modules only when instructed to do so.
+
+# if($Env:BUILD_PSMODULE)
+#     {
+  $CiRoot/publish-localartifact.ps1 -Verbose
+#  }
 }
 
 end
