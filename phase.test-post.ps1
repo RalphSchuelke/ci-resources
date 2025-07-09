@@ -31,7 +31,7 @@ Build-Module   -verbose -OutputDirectory ../Output -SemVer $Env:GitVersion_Infor
 
 # if($Env:BUILD_PSMODULE)
 #     {
-  $CiRoot/publish-localartifact.ps1 -Verbose
+&  "${CiRoot}/publish-localartifact.ps1" -Verbose
 #  }
 }
 
