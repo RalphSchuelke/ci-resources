@@ -3,6 +3,10 @@ using namespace System
 using namespace System.Security.Cryptography.X509Certificates
 
 <#
+  note / todo? 
+  - We're missing a README in the nupkg which is not quite optional; we may want to put something in somehow if we don't have a README in the repository we can use.
+
+
     we're basically signing and sealing the package here, so that it can be deployed to a repository.
 
     Care must be taken so we don't break our own processes as there is multi-level signing:
