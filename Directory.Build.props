@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Project>
+  <PropertyGroup>
+    <!--
+	Set GitVersionTargetFramework to ... something ... to at least attempt
+	reproduceability.
+	Note that not only does this have to be a valid TFM but it also has to exist, by name, as a path component to gitversion.dll within the nuget package.
+	Check ~/.nuget/packages/gitversion.*/ for details
+	(particularly, gitversion.dll location).
+    -->
+    
+    <GitVersionTargetFramework>net10.0</GitVersionTargetFramework>
+    <ProjectTop>$(MSBuildThisFileDirectory)..</ProjectTop>
+    <!-- Get rid of CS1591 (functions improperly documented) warnings. -->
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Author>R. Schuelke</Author>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(UsePs)!=''">
+    <netstandard>$(TargetFramework.StartsWith(`netstandard`))</netstandard>
+    <net10>$(TargetFramework.StartsWith(`net10`))</net10>
+    <net9>$(TargetFramework.StartsWith(`net9`))</net9>
+    <net8>$(TargetFramework.StartsWith(`net8`))</net8>
+    <net7>$(TargetFramework.StartsWith(`net7`))</net7>
+    <net6>$(TargetFramework.StartsWith(`net6`))</net6>
+    <net5>$(TargetFramework.StartsWith(`net5`))</net5>
+    <net4>$(TargetFramework.StartsWith(`net4`))</net4>
+    <netbeta>$(net10)</netbeta>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    
+	<TargetFrameworks>net481;net10.0;net8.0;netstandard20;</TargetFrameworks>
+
+<!--    <TargetFrameworks>netstandard20</TargetFrameworks> -->
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+    <DelaySign>true</DelaySign>
+    <AssemblyOriginatorKeyFile>$(ProjectTop)/net-snk.pub</AssemblyOriginatorKeyFile>
+    <Deterministic>true</Deterministic>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <LangVersion>12</LangVersion>
+    <IsWindows>$([MSBuild]::IsOsPlatform('Windows'))</IsWindows>
+</PropertyGroup>
+</Project>

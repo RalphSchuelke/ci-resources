@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<Project>
+  <ItemGroup>
+    <BinariesToSign Include="$(OutDir)$(MSBuildProjectName).dll" />
+  </ItemGroup>
+  
+  <Target Name="CopyDLLs" AfterTargets="Build" Condition="$(ProjectDir)!=''" DependsOnTargets="CleanAssemblyStore">
+    <Message Text="Copying build files for [$(ProjectName)|$(TargetFramework)] to [$(ProjectDir)../lib/$(TargetFramework)]" Importance="High" />
+    <Exec Condition="$(IsWindows)=='true'" Command="sn -Rc  &quot;%(BinariesToSign.FullPath)&quot; IACM_CONTAINER" />
+    <!-- Exec Condition="$(IsWindows)!='   Command="cat $(ProjectTop)/net-snk.pfx.pass | sn -R PsModulesCore.Backend.dll ~/PSModules/net-snk.pfx -->
+
+    <Exec Condition="$(IsWindows)!='true'" Command="cat &quot;$(ProjectTop)/net-snk.pfx.pass&quot; | sn -R  &quot;%(BinariesToSign.FullPath)&quot; &quot;$(ProjectTop)/net-snk.pfx&quot;" />
+    <!--
+	Non window machines don't do delaysign. Put in OS specific branches (windows, non) if needed.
+	cat $pfxPass | sn -R path/to/assembly has been shown to work but it might not be needed.
+	Note that on Windows, passwd can't be fed to sn via stdin; it has to be empty to work and we can just install our key into a container somewhere which then won't ask for any password.
+    -->
+    <Copy
+        SourceFiles="@(BinariesToCopy)"
+        DestinationFolder="$(ProjectDir)/../lib/$(TargetFramework)" />
+  </Target>
+
+  <Target Name="CleanAssemblyStore" Condition="$(ProjectDir)!=''">
+    <ItemGroup>
+      <FilesToDelete Include="
+                              $(ProjectDir)/../lib/*.dll;
+                              $(ProjectDir)/../lib/*.xml;
+                              $(ProjectDir)/../lib/*.pdb;
+                              $(ProjectDir)/../lib/*.json;
+			      "/>
+    </ItemGroup>
+    <Message Text="Delete: @(FilesToDelete)" Importance="high" />
+    <Delete Files="@(FilesToDelete)">
+      <Output TaskParameter="DeletedFiles" ItemName="DeletedList"/>
+    </Delete>
+    <Message Text="Deleted files: '@(DeletedList)'" Importance="high" />
+  </Target>
+  <Import Project="vs.nuget.targets" />
+  <Import Project="vs.powershell.targets" Condition="$(UsePs)==true" />
+</Project>

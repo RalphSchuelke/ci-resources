@@ -1,0 +1,190 @@
+<!-- -*- xml -*- -->
+<Project>
+  <PropertyGroup>
+    <net4>$(TargetFramework.StartsWith(`net4`))</net4>
+    <netstandard>$(net4)</netstandard>
+    <net6>$(TargetFramework.StartsWith(`net6`))</net6>
+    <net8>$(TargetFramework.StartsWith(`net8`))</net8>
+    <net9>$(TargetFramework.StartsWith(`net9`))</net9>
+    <net10>$(TargetFramework.StartsWith(`net10`))</net10>
+  </PropertyGroup>
+  <PropertyGroup>
+
+    <GlobalIncludeAssets>Runtime;Build;Native;contentFiles;Analyzers</GlobalIncludeAssets>
+    <MmiVersion>3.0.0</MmiVersion>
+    <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  
+    <SmNetStandard Condition="$(UsePsBeta)=='true'">$(DsVersion)</SmNetStandard>
+    <SmNetStandard Condition="$(UsePsBeta)!='true'">$(Ds8Version)</SmNetStandard>
+  </PropertyGroup>
+  
+<!--  <Import Project="targets/vs.version.targets" Condition="$(VsVersionsIncluded)!='true'" /> -->
+  <ItemGroup><!-- Threading -->
+    <PackageVersion Version="4.3.0" Include="System.Threading" />
+    <PackageVersion Version="4.3.0" Include="System.Threading.ThreadPool" />
+    <PackageVersion Version="4.3.0" Include="System.Threading.Tasks" />
+  </ItemGroup>
+
+  <!-- Packages for net4/netstandard -->
+  <ItemGroup>
+    <PackageVersion Version="2.6.2" Include="BouncyCastle.Cryptography" />
+   
+    <PackageVersion Version="4.6.1" Include="System.Numerics.Vectors" />
+    <PackageVersion Version="6.1.2" Include="System.Runtime.CompilerServices.Unsafe" />
+    <PackageVersion Version="4.6.3" Include="System.Threading.Tasks.Extensions" />
+    <PackageVersion Version="4.6.1" Include="System.ValueTuple" />
+  </ItemGroup>
+
+  <!-- Office interop (Windows) -->
+  <ItemGroup>
+    <PackageVersion Version="1.0.0.0" Include="Interop.Domino.dll" />
+    <!-- 
+      Only one project (adverwalten) references office.core, and even then, it looks like an arbitrary entry.
+      See if we can update it with something more recent.
+       -->
+
+<!--    <PackageVersion Version="12.0.0.0" Include="Microsoft.Office.Core" /> -->
+    <PackageVersion Version="15.0.4420.1018" Include="Microsoft.Office.Interop.PowerPoint" />
+  </ItemGroup>
+
+  <ItemGroup> <!-- Bits for setproxy service executable -->
+  
+    <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="5.0" />
+    <PackageVersion Include="Microsoft.CodeAnalysis" Version="5.0" />
+    <PackageVersion Include="Microsoft.Toolkit.Uwp.Notifications" Version="7.1.3" />
+    <PackageVersion Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
+
+    <PackageVersion Include="Microsoft.WindowsAppSDK" Version="1.6.250228001" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <!-- Internal bits -->
+    <PackageVersion Include="JPMF.ErrorCodes.Backend" Version="4.4.1" />
+    <PackageVersion Include="JPMF.GerichtInfo.Backend" Version="3.0.0" />
+    <PackageVersion Include="JPMF.PsCompliance.Backend" Version="1.0.0" />
+    <PackageVersion Include="JPMF.Platform.Backend" Version="6.2.1" />
+    <PackageVersion Include="JPMF.PsThreads.Backend" Version="3.0.3-5" />
+    <PackageVersion Include="JPMF.Network.Backend" Version="5.4.1" />
+    <PackageVersion Include="JPMF.Cabinet" Version="3.0.0" />
+    <PackageVersion Include="JPMF.IISLog.Backend" Version="3.3.1-4" />
+  </ItemGroup>
+
+  <ItemGroup><!-- UI related -->
+  <PackageVersion Include="Xamarin.Forms" Version="5.0.0.2662" />
+  <PackageVersion Include="Microsoft.Maui.Controls" Version="10.0.80" />
+  <PackageVersion Include="Microsoft.Maui.Controls.Compatibility" Version="10.0.80" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <!-- Windows related -->
+    <PackageVersion Condition="$(netbeta)!=true" Include="System.Diagnostics.Eventlog" Version="10.0.9" />
+    <PackageVersion Condition="$(netbeta)==true" Include="System.Diagnostics.Eventlog" Version="10.0.9" />
+    <PackageVersion Condition="$(netbeta)!=true" Include="Microsoft.Windows.Compatibility" Version="10.0.9" />
+    <PackageVersion Condition="$(netbeta)==true" Include="Microsoft.Windows.Compatibility" Version="10.0.9" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.2" />
+    <PackageVersion Include="System.Security.Principal.Windows"  Version="5.0.0" />
+    <PackageVersion Include="System.IO.FileSystem.AccessControl" Version="5.0.0" />
+
+  </ItemGroup>
+
+  <ItemGroup><!-- Compression -->
+    <PackageVersion Include="System.IO.Compression" Version="4.3.0" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <!-- localrepo -->
+    <PackageVersion Include="JPMF.Favorites.Backend" Version="5.1.5" />
+    <PackageVersion Include="JPMF.PsModulesCore.Backend" Version="11.0.0" />
+    <PackageVersion Include="JPMF.PsModulesCore.Cmdlet"  Version="11.0.0" />
+    <!--    <PackageVersion Include="Newtonsoft.Json" Version="13.0.1" /> -->
+    <PackageVersion Include="MailKit" Version="4.11.0" />
+    <PackageVersion Include="MimeKit" Version="4.17.0" />
+    <PackageVersion Include="Pester" Version="5.8.0"/>
+    <PackageVersion Include="Microsoft.Management.Infrastructure" Version="3.0.0" />
+    <PackageVersion Include="Microsoft.Management.Infrastructure.Runtime.Win" Version="3.0.0" />
+    <PackageVersion Include="Microsoft.Management.Infrastructure.Runtime.Unix" Version="3.0.0" />
+
+    <PackageVersion Include="Microsoft.ActiveDirectory.Management" Version="0.0.0" />
+   
+    <PackageVersion Condition="$(netbeta)!=true" Include="System.Management" Version="10.0.9" />
+    <PackageVersion Condition="$(netbeta)==true" Include="System.Management" Version="10.0.9" />
+
+    
+    <PackageVersion Include="PowerShellStandard.Library" Version="5.1.1" />
+    <PackageVersion Include="EPPlus" Version="7.6.1" />
+    <PackageVersion Include="JPMF.Infrastructure.Backend" Version="7.3.14" />
+    <PackageVersion Include="JPMF.Infrastructure.Cmdlet" Version="7.3.14" />
+    <PackageVersion Include="Microsoft.Win32.Registry" Version="5.0.0" />
+    <PackageVersion Include="JPMF.FileShares.Backend" Version="3.4.1-1" />
+    <PackageVersion Include="System.Buffers" Version="4.6.1" />
+    <PackageVersion Include="System.Memory" Version="4.6.3" />
+     </ItemGroup>
+
+  <!--
+      this tries to autoresolve while using a common base that should be valid for all of them (just not perfect)
+      1.0.0 was proposed but that issues a warning since there is no actual pkg by that name.
+
+Note that netstandard TFMs should not reference PowerShell.SDK but PowershellStandard.Library,
+however we cannot at this point define dependency paths - just versions.
+We must also have a definition for all the TFMs set for a particular project.. If we don't, it is an error.
+(Actually, we need a fully qualified path. If there are no endpoints or endpoints were excluded through conditions or otherwise, we don't need a TFM definition.)
+  -->
+  <ItemGroup Condition="$(TargetFramework.StartsWith(`netstandard`))==true Or $(net4)==true">
+    <PackageVersion Include="PowerShell.StandardLibrary" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(net8)=='true'">
+    <PackageVersion Include="Microsoft.PowerShell.SDK" Version="7.4.17" />
+    <PackageVersion Include="Microsoft.Management.Infrastructure.CimCmdlets" Version="7.4.17" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(net10)=='true'">
+    <PackageVersion Include="Microsoft.PowerShell.SDK" Version="7.6.3" />
+    <PackageVersion Include="Microsoft.Management.Infrastructure.CimCmdlets" Version="7.6.3" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(UseDs)=='true'" >
+    <PackageVersion Condition="$(netbeta)!=true" Include="System.DirectoryServices" Version="9.0.3" />
+    <PackageVersion Condition="$(netbeta)==true" Include="System.DirectoryServices" Version="9.0.3" />
+    
+    <PackageVersion Condition="$(netbeta)!=true" Include="System.DirectoryServices.AccountManagement" Version="9.0.3" />
+    <PackageVersion Condition="$(netbeta)==true" Include="System.DirectoryServices.AccountManagement" Version="9.0.3" />
+    
+    <PackageVersion Condition="$(netbeta)!=true" Include="System.DirectoryServices.Protocols" Version="9.0.3" />
+    <PackageVersion Condition="$(netbeta)==true" Include="System.DirectoryServices.Protocols" Version="9.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageVersion Condition="$(netbeta)!=true" Version="10.0.9" Include="System.Formats.Asn1" />
+    <PackageVersion Condition="$(netbeta)==true" Version="10.0.9" Include="System.Formats.Asn1" />
+  <PackageVersion Version="4.3.1" Include="System.Text.RegularExpressions" />
+  </ItemGroup>
+
+  <ItemGroup>
+        <!-- JSON -->
+    <PackageVersion Include="System.Text.Json" Version="10.0.0" />
+<PackageVersion Include="System.Net.Http" Version="4.3.4" />
+    <PackageVersion Include="System.Net.Http.Json" Version="9.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Note: gitversion.tool is available in beta.7 but that, like most of those builds, fails because of a faulty net configuration.
+	 We stick with beta.3 because that's the last one that seems to actually do what it's supposed to.
+    -->
+    <GlobalPackageReference Include="Jetbrains.Annotations" Version="2026.2.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>$(GlobalIncludeAssets)></IncludeAssets>
+    </GlobalPackageReference>
+    
+    <GlobalPackageReference  Condition="$(NoGitVersion)!='true' And $(UseGitVersion)!='false'" Include="GitVersion.MsBuild" Version="6.8.1">
+      <PrivateAssets>all;All</PrivateAssets>
+      <IncludeAssets>$(GlobalIncludeAssets)</IncludeAssets>
+
+    </GlobalPackageReference>
+       <GlobalPackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.300">
+	 <PrivateAssets>All</PrivateAssets>
+	 <IncludeAssets>$(GlobalIncludeAssets)</IncludeAssets>
+    </GlobalPackageReference>
+  </ItemGroup>
+</Project>
