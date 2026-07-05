@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?> 
 <Project>
+  <ItemGroup Condition="$(UseMmi)=='true'">
+<PackageReference Include="Microsoft.Management.Infrastructure" />
+  </ItemGroup>
+  
   <ItemGroup>
     <BinariesToSign Include="$(OutDir)$(MSBuildProjectName).dll" />
   </ItemGroup>
