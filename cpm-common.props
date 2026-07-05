@@ -20,7 +20,15 @@
   </PropertyGroup>
   
 <!--  <Import Project="targets/vs.version.targets" Condition="$(VsVersionsIncluded)!='true'" /> -->
-  <ItemGroup><!-- Threading -->
+<ItemGroup><!-- Threading -->
+  <PackageVersion Include="coverlet.collector" Version="6.0.4" />
+  <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
+  <PackageVersion Include="xunit" Version="2.9.3" />
+  <PackageVersion Include="xunit.runner.visualstudio" Version="3.0.2" />
+
+  <PackageVersion Version="4.3.2" Include="NUnit" />
+  <PackageVersion Version="1.0.0" Include="XUnit.Framework" />
+  <PackageVersion Version="[1.7.0-preview.25167.10,]" Include="Microsoft.Testing.Platform.MsBuild" />
     <PackageVersion Version="4.3.0" Include="System.Threading" />
     <PackageVersion Version="4.3.0" Include="System.Threading.ThreadPool" />
     <PackageVersion Version="4.3.0" Include="System.Threading.Tasks" />
@@ -33,7 +41,7 @@
     <PackageVersion Version="4.6.1" Include="System.Numerics.Vectors" />
     <PackageVersion Version="6.1.2" Include="System.Runtime.CompilerServices.Unsafe" />
     <PackageVersion Version="4.6.3" Include="System.Threading.Tasks.Extensions" />
-    <PackageVersion Version="4.6.1" Include="System.ValueTuple" />
+    <PackageVersion Version="4.6.2" Include="System.ValueTuple" />
   </ItemGroup>
 
   <!-- Office interop (Windows) -->
@@ -53,9 +61,9 @@
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="5.0" />
     <PackageVersion Include="Microsoft.CodeAnalysis" Version="5.0" />
     <PackageVersion Include="Microsoft.Toolkit.Uwp.Notifications" Version="7.1.3" />
-    <PackageVersion Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
+    <PackageVersion Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.4654" />
 
-    <PackageVersion Include="Microsoft.WindowsAppSDK" Version="1.6.250228001" />
+    <PackageVersion Include="Microsoft.WindowsAppSDK" Version="2.2.0" />
   </ItemGroup>
   
   <ItemGroup>
@@ -98,7 +106,7 @@
     <PackageVersion Include="JPMF.PsModulesCore.Backend" Version="11.0.0" />
     <PackageVersion Include="JPMF.PsModulesCore.Cmdlet"  Version="11.0.0" />
     <!--    <PackageVersion Include="Newtonsoft.Json" Version="13.0.1" /> -->
-    <PackageVersion Include="MailKit" Version="4.11.0" />
+    <PackageVersion Include="MailKit" Version="4.17.0" />
     <PackageVersion Include="MimeKit" Version="4.17.0" />
     <PackageVersion Include="Pester" Version="5.8.0"/>
     <PackageVersion Include="Microsoft.Management.Infrastructure" Version="3.0.0" />
@@ -112,7 +120,7 @@
 
     
     <PackageVersion Include="PowerShellStandard.Library" Version="5.1.1" />
-    <PackageVersion Include="EPPlus" Version="7.6.1" />
+    <PackageVersion Include="EPPlus" Version="7.7.0" />
     <PackageVersion Include="JPMF.Infrastructure.Backend" Version="7.3.14" />
     <PackageVersion Include="JPMF.Infrastructure.Cmdlet" Version="7.3.14" />
     <PackageVersion Include="Microsoft.Win32.Registry" Version="5.0.0" />
@@ -145,14 +153,14 @@ We must also have a definition for all the TFMs set for a particular project.. I
   </ItemGroup>
 
   <ItemGroup Condition="$(UseDs)=='true'" >
-    <PackageVersion Condition="$(netbeta)!=true" Include="System.DirectoryServices" Version="9.0.3" />
-    <PackageVersion Condition="$(netbeta)==true" Include="System.DirectoryServices" Version="9.0.3" />
+    <PackageVersion Condition="$(netbeta)!=true" Include="System.DirectoryServices" Version="10.0.9" />
+    <PackageVersion Condition="$(netbeta)==true" Include="System.DirectoryServices" Version="10.0.9" />
     
-    <PackageVersion Condition="$(netbeta)!=true" Include="System.DirectoryServices.AccountManagement" Version="9.0.3" />
-    <PackageVersion Condition="$(netbeta)==true" Include="System.DirectoryServices.AccountManagement" Version="9.0.3" />
+    <PackageVersion Condition="$(netbeta)!=true" Include="System.DirectoryServices.AccountManagement" Version="10.0.9" />
+    <PackageVersion Condition="$(netbeta)==true" Include="System.DirectoryServices.AccountManagement" Version="10.0.9" />
     
-    <PackageVersion Condition="$(netbeta)!=true" Include="System.DirectoryServices.Protocols" Version="9.0.3" />
-    <PackageVersion Condition="$(netbeta)==true" Include="System.DirectoryServices.Protocols" Version="9.0.3" />
+    <PackageVersion Condition="$(netbeta)!=true" Include="System.DirectoryServices.Protocols" Version="10.0.9" />
+    <PackageVersion Condition="$(netbeta)==true" Include="System.DirectoryServices.Protocols" Version="10.0.9" />
   </ItemGroup>
 
   <ItemGroup>
@@ -163,9 +171,9 @@ We must also have a definition for all the TFMs set for a particular project.. I
 
   <ItemGroup>
         <!-- JSON -->
-    <PackageVersion Include="System.Text.Json" Version="10.0.0" />
+    <PackageVersion Include="System.Text.Json" Version="10.0.9" />
 <PackageVersion Include="System.Net.Http" Version="4.3.4" />
-    <PackageVersion Include="System.Net.Http.Json" Version="9.0.3" />
+    <PackageVersion Include="System.Net.Http.Json" Version="10.0.9" />
   </ItemGroup>
 
   <ItemGroup>
